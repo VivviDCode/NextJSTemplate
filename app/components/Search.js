@@ -6,7 +6,7 @@ export default function Search({ onSearch }) {
       <input
         type="text"
         placeholder="Search..."
-        className="border border-gray-300 rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:border-blue-500"
+        className="border border-gray-300 rounded-lg py-2 pl-10 pr-4 focus:outline-none focus:border-blue-500 w-full"
         onChange={onSearch}
       />
       <svg

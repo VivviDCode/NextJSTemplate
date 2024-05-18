@@ -132,7 +132,7 @@ export default function Ads() {
       />
 
       <div className="p-6 relative flex flex-col min-w-0 break-words bg-white border-0 rounded-3xl ">
-        <div className=" pb-0 mb-0 rounded-t-4">
+        <div className=" pb-0 mb-0 rounded-t-4 ">
           <div className="flex justify-between">
             <h6 className="mb-2 text-lg text-black font-semibold">
               All Products
@@ -142,11 +142,11 @@ export default function Ads() {
               Go to Ads Page <MoveForward />
             </button>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-start gap-2 xxl:flex-row xl:flex-row lg:flex-row md:flex-row sm:flex-row max-sm:flex-col">
             <Search onSearch={onSearch} />
             <button
               onClick={() => handleAdd()}
-              className="font-semibold p-2 rounded-sm outline-none border-none bg-slate-100"
+              className="font-semibold p-2 rounded-sm outline-none border-none bg-slate-100 xxl:w-auto xl:w-auto lg:w-auto md:w-auto sm:w-auto max-sm:w-full"
             >
               Add Product
             </button>
