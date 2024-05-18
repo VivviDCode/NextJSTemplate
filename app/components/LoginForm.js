@@ -70,7 +70,7 @@ export default function LoginForm() {
               <div className="w-full  flex justify-center items-center rounded-lg bg-[#F7F8FA]">
                 <input
                   className="px-5 w-full py-3 bg-transparent rounded-s-lg ring-0 outline-0 text-sm placeholder:font-medium placeholder:text-[#9A9998] text-myblack"
-                  placeholder="admin@bismillahbiz.com"
+                  placeholder="enter email"
                   type="email"
                   value={formData.email}
                   onChange={(e) =>
@@ -120,7 +120,7 @@ export default function LoginForm() {
               <div className="px-5 py-4 w-full flex justify-center items-center rounded-lg bg-[#F7F8FA]">
                 <input
                   className="w-full bg-transparent rounded-s-lg ring-0 outline-0 text-sm placeholder:font-medium placeholder:text-[#9A9998] text-myblack"
-                  placeholder="admin@bismillahbiz.com"
+                  placeholder="enter email"
                   type="email"
                   onChange={(e) =>
                     setFormData({ ...formData, username: e.target.value })
