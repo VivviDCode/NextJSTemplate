@@ -1,103 +1,20 @@
 'use client'
-
 import UsePagination from "@/app/components/UserPagination";
 import SearchIcon, { AddIcon, DeleteIcon, EditIcon, SortIcon, ViewIcon } from "@/public/assets/Icons";
 import img from "../../../public/assets/images/retrosupply-jLwVAUtLOAQ-unsplash.jpg";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategoryFetch } from "../../saga-redux/redux/ProductsSlice";
+import { useEffect } from "react";
 
 export default function Categories() {
-  const data = [
-   
-    {
-      id: "J293DSA39",
-      title: "Samsung Galaxy S21",
-      name: "User_456",
-      dateTime: "February 10, 2022 - 10:00",
-      price: "$699.00",
-      status: "Pending",
-    },
-    {
-      id: "K293DSA39",
-      title: "Samsung Galaxy S21",
-      name: "User_456",
-      dateTime: "February 10, 2022 - 10:00",
-      price: "$699.00",
-      status: "Active",
-    },
-    {
-      id: "L293DSA39",
-      title: "Samsung Galaxy S21",
-      name: "User_456",
-      dateTime: "February 10, 2022 - 10:00",
-      price: "$699.00",
-      status: "Active",
-    },
-    {
-      id: "M293DSA39",
-      title: "Samsung Galaxy S21",
-      name: "User_456",
-      dateTime: "February 10, 2022 - 10:00",
-      price: "$699.00",
-      status: "Sold",
-    },
-    {
-      id: "N293DSA39",
-      title: "Samsung Galaxy S21",
-      name: "User_456",
-      dateTime: "February 10, 2022 - 10:00",
-      price: "$699.00",
-      status: "Sold",
-    },
-    {
-      id: "I293DSA39",
-      title: "Iphone 13",
-      name: "User_123",
-      dateTime: "January 20, 2022 - 14:00",
-      price: "$799.00",
-      status: "Pending",
-    },
-    {
-      id: "J293DSA39",
-      title: "Samsung Galaxy S21",
-      name: "User_456",
-      dateTime: "February 10, 2022 - 10:00",
-      price: "$699.00",
-      status: "Pending",
-    },
-    {
-      id: "K293DSA39",
-      title: "Samsung Galaxy S21",
-      name: "User_456",
-      dateTime: "February 10, 2022 - 10:00",
-      price: "$699.00",
-      status: "Active",
-    },
-    {
-      id: "L293DSA39",
-      title: "Samsung Galaxy S21",
-      name: "User_456",
-      dateTime: "February 10, 2022 - 10:00",
-      price: "$699.00",
-      status: "Active",
-    },
-    {
-      id: "M293DSA39",
-      title: "Samsung Galaxy S21",
-      name: "User_456",
-      dateTime: "February 10, 2022 - 10:00",
-      price: "$699.00",
-      status: "Sold",
-    },
-    {
-      id: "N293DSA39",
-      title: "Samsung Galaxy S21",
-      name: "User_456",
-      dateTime: "February 10, 2022 - 10:00",
-      price: "$699.00",
-      status: "Sold",
-    },
-    // Add more data objects here
-  ];
+  const dispatch = useDispatch();
+  const {allCategory} = useSelector((state) => state.Products);
+
+  useEffect(() => {
+    dispatch(getAllCategoryFetch());
+  }, [dispatch]);
+
   const itemsPerPage = 8;
   const {
     currentPage,
@@ -106,7 +23,7 @@ export default function Categories() {
     handleNextButtonClick,
     handlePageChange,
     displayedData,
-  } = UsePagination(data, itemsPerPage);
+  } = UsePagination(allCategory, itemsPerPage);
 
   const prevButtonDisabled = currentPage === 1;
   const nextButtonDisabled = currentPage === totalPages;
@@ -176,7 +93,7 @@ export default function Categories() {
                     >
                       <td className="align-middle bg-transparent whitespace-nowrap py-4  ">
                         <h6 className="mb-0 text-sm leading-normal text-myblack ps-4">
-                          {rowData.id}
+                          {index}
                         </h6>
                       </td>
                       <td className="align-middle bg-transparent whitespace-nowrap ">
@@ -190,7 +107,7 @@ export default function Categories() {
                       </td>
                       <td className="align-middle bg-transparent whitespace-nowrap ">
                         <h6 className="mb-0 text-sm leading-normal text-myblack font-medium">
-                          {rowData.name}
+                          {rowData}
                         </h6>
                       </td>
                       <td className="align-middle bg-transparent whitespace-nowrap ">

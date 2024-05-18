@@ -1,98 +1,86 @@
-import React from "react";
-import { Line } from "react-chartjs-2";
+import React, { useEffect } from "react";
+import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProductsFetch } from "../saga-redux/redux/ProductsSlice";
 Chart.register(CategoryScale);
 
 export default function Graph() {
+  const dispatch = useDispatch()
+  const  products = useSelector((state) => state.Products?.allProducts);
+  useEffect(() => {
+    dispatch(getAllProductsFetch());
+  }, [dispatch]);
+
+  const categoryCounts = {};
+  products?.products?.forEach((product) => {
+    const category = product.category;
+    if (category in categoryCounts) {
+      categoryCounts[category]++;
+    } else {
+      categoryCounts[category] = 1;
+    }
+  });
+  const categories = Object.keys(categoryCounts);
+  const counts = Object.values(categoryCounts);
+
   const data = {
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    labels: categories,
     datasets: [
       {
-        label: "Series A",
-        data: [25, 30, 25, 20, 15, 18, 20, 25, 30, 25, 20, 30],
-        borderColor: "#34C759",
-        backgroundColor: "#34C759",
-        pointRadius: 0.5,
-        borderWidth: 3,
-        tension: 0.5,
-      },
-      {
-        label: "Series B",
-        data: [15, 18, 20, 25, 30, 25, 28, 30, 25, 20, 18, 15],
-        borderColor: "#1886FE",
-        backgroundColor: "#1886FE",
-        pointRadius: 0.5,
-        borderWidth: 3,
-        tension: 0.5,
+        label: "Category Counts",
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.6)", // Red
+          "rgba(54, 162, 235, 0.6)", // Blue
+          "rgba(255, 206, 86, 0.6)", // Yellow
+          "rgba(75, 192, 192, 0.6)", // Green
+          "rgba(153, 102, 255, 0.6)", // Purple
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+        ],
+        borderWidth: 1,
+        hoverBackgroundColor: [
+          "rgba(255, 99, 132, 0.8)",
+          "rgba(54, 162, 235, 0.8)",
+          "rgba(255, 206, 86, 0.8)",
+          "rgba(75, 192, 192, 0.8)",
+          "rgba(153, 102, 255, 0.8)",
+        ],
+        hoverBorderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+        ],
+        data: counts,
       },
     ],
   };
 
+  // Define options for the bar chart
   const options = {
-    responsive: true,
     maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      },
-    },
     scales: {
       y: {
-        grid: {
-          display: false,
-        },
         ticks: {
-          display: true,
-          color: "#2E343E60",
-          stepSize: 10,
+          beginAtZero: true,
+          stepSize: 0.5,
+          suggestedMax: 10, // Set your desired maximum value here
         },
-        border: {
-          display: false,
-        },
-        suggestedMin: 0,
-        suggestedMax: 30,
-      },
-      x: {
-        grid: {
-          display: false,
-        },
-        ticks: {
-          display: true,
-          color: "#2E343E90",
-        },
-        border: {
-          display: true,
-        },
-      },
-    },
-    layout: {
-      padding: {
-        top: 30,
-        bottom: 0,
-        left: 0,
-        right: 0,
       },
     },
   };
+
   return (
     <div className="w-full max-w-full mt-0 mb-6 lg:mb-0 lg:w-[79.5%] lg:flex-none xl:max-h-[330px] xl:min-h-[330px]">
+      
       <div className="flex flex-wrap  min-h-full">
         <div className="w-full max-w-full px-2 mt-0 lg:flex-none">
           <div className="p-6 min-h-full  relative z-20 flex min-w-0 flex-col break-words rounded-3xl border-0 border-solid bg-white bg-clip-border">
@@ -115,7 +103,7 @@ export default function Graph() {
               </div>
             </div>
             <div className="flex-auto  min-h-full ">
-              <Line data={data} options={options} />
+              <Bar data={data} options={options} />
             </div>
           </div>
         </div>

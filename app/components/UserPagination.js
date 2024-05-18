@@ -1,9 +1,8 @@
-'use client'
+"use client";
 import { useState } from "react";
 // Pagination hook
 export default function UsePagination(data, itemsPerPage) {
   const [currentPage, setCurrentPage] = useState(1);
-
   const totalPages = Math.ceil(data?.length / itemsPerPage);
 
   const handlePrevButtonClick = () => {
@@ -23,7 +22,7 @@ export default function UsePagination(data, itemsPerPage) {
   };
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const displayedData = data.slice(startIndex, endIndex);
+  const displayedData = data?.slice(startIndex, endIndex);
   return {
     currentPage,
     totalPages,

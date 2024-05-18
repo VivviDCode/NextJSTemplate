@@ -1,6 +1,8 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import { Notification } from "@/public/assets/Icons";
+import img from "@/public/assets/images/kisspng-computer-icons-login-management-user-5ae155f3386149.6695613615247170432309.jpg";
+import Image from "next/image";
 export default function Notifications() {
   const [notification, setNotification] = useState(false);
   return (
@@ -27,11 +29,11 @@ export default function Notifications() {
           <div className="dark:hover:bg-slate-900 ease py-1.2 clear-both block w-full whitespace-nowrap rounded-lg bg-transparent px-4 duration-300 hover:bg-gray-200 hover:text-slate-700 lg:transition-colors">
             <div className="flex py-1">
               <div className="my-auto">
-                <img
-                  src={"/assets/img/small-logos/logo-spotify.svg"}
-                  alt="err"
+                <Image
                   height={100}
                   width={100}
+                  src={img}
+                  alt="err"
                   className="inline-flex items-center justify-center mr-4 text-sm text-white bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 h-9 w-9 max-w-none rounded-xl"
                 />
               </div>
