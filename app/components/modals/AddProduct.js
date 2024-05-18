@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { EditIcon } from "../../../public/assets/Icons";
 
@@ -6,9 +7,28 @@ export default function AddProduct({ onAdd, onClose, isOpenAddModal }) {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
-  const handleUpdate = () => {
-    onAdd({ title, description, price, category });
-    onClose();
+  const [errors, setErrors] = useState({});
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    const newErrors = {};
+
+    if (!title) newErrors.title = "Title is required";
+    if (!description) newErrors.description = "Description is required";
+    if (!price) newErrors.price = "Price is required";
+    if (!category) newErrors.category = "Category is required";
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      onAdd({ title, description, price, category });
+      onClose();
+      setTitle("");
+      setDescription("");
+      setPrice("");
+      setCategory("");
+      setErrors("");
+    }
   };
 
   return (
@@ -40,76 +60,94 @@ export default function AddProduct({ onAdd, onClose, isOpenAddModal }) {
           aria-modal="true"
           aria-labelledby="modal-title"
         >
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div className="sm:flex sm:items-start">
-              <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-[100%]">
-                <h3
-                  className="text-lg leading-6 font-medium text-gray-900 border-b-orange-100"
-                  id="modal-title"
-                >
-                  Add Product
-                </h3>
-                <div className="mt-2 flex flex-col">
-                  <label className="text-sm text-black-500 my-2">Title</label>
-                  <input
-                    type="text"
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="border w-full rounded-md p-2"
-                    value={title}
-                  />
-                </div>
-                <div className="mt-2 flex flex-col">
-                  <label className="text-sm text-black-500 my-2">Price</label>
-                  <input
-                    type="number"
-                    onChange={(e) => setPrice(e.target.value)}
-                    className="border w-full rounded-md p-2"
-                    value={price}
-                  />
-                </div>
-                <div className="mt-2 flex flex-col">
-                  <label className="text-sm text-black-500 my-2">
-                    Category
-                  </label>
-                  <input
-                    type="text"
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="border w-full rounded-md p-2"
-                    value={category}
-                  />
-                </div>{" "}
-                <div className="mt-2 flex flex-col">
-                  <label className="text-sm text-black-500 my-2">
-                    Description
-                  </label>
-                  <textarea
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="border w-full rounded-md p-2"
-                    value={description}
-                  ></textarea>
+          <form onSubmit={handleUpdate}>
+            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div className="sm:flex sm:items-start">
+                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-[100%]">
+                  <h3
+                    className="text-lg leading-6 font-medium text-gray-900 border-b-orange-100"
+                    id="modal-title"
+                  >
+                    Add Product
+                  </h3>
+                  <div className="mt-2 flex flex-col">
+                    <label className="text-sm text-black-500 my-2">Title</label>
+                    <input
+                      type="text"
+                      onChange={(e) => setTitle(e.target.value)}
+                      className="border w-full rounded-md p-2"
+                      value={title}
+                    />
+                    {errors.title && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.title}
+                      </p>
+                    )}
+                  </div>
+                  <div className="mt-2 flex flex-col">
+                    <label className="text-sm text-black-500 my-2">Price</label>
+                    <input
+                      type="number"
+                      onChange={(e) => setPrice(e.target.value)}
+                      className="border w-full rounded-md p-2"
+                      value={price}
+                    />
+                    {errors.price && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.price}
+                      </p>
+                    )}
+                  </div>
+                  <div className="mt-2 flex flex-col">
+                    <label className="text-sm text-black-500 my-2">
+                      Category
+                    </label>
+                    <input
+                      type="text"
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="border w-full rounded-md p-2"
+                      value={category}
+                    />
+                    {errors.category && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.category}
+                      </p>
+                    )}
+                  </div>
+                  <div className="mt-2 flex flex-col">
+                    <label className="text-sm text-black-500 my-2">
+                      Description
+                    </label>
+                    <textarea
+                      onChange={(e) => setDescription(e.target.value)}
+                      className="border w-full rounded-md p-2"
+                      value={description}
+                    ></textarea>
+                    {errors.description && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.description}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <button
-              onClick={onClose}
-              type="button"
-              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
-            >
-              Close
-            </button>
-            <button
-              onClick={handleUpdate}
-              type="button"
-              className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 ${
-                title.length > 0 ? "bg-red-600" : "bg-red-200"
-              } text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm`}
-              disabled={title.length > 0 ? false : true}
-            >
-              Add
-            </button>
-          </div>
+            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              <button
+                type="button"
+                onClick={onClose}
+                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
+              >
+                Close
+              </button>
+              <button
+                type="submit"
+                className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm`}
+              >
+                Add
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

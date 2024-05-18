@@ -24,6 +24,7 @@ export default function Ads() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenUpdate, setIsOpenUpdate] = useState(false);
   const [isOpenAddModal, setIsOpenAddModal] = useState(false);
+  
   const {
     products,
     searchProduct,
@@ -105,9 +106,23 @@ export default function Ads() {
     dispatch(onAddProduct(data));
   };
   ;
+  const debounce = (func, delay) => {
+    let timer;
+    return function (...args) {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        func.apply(context, args);
+      }, delay);
+    };
+  };
+  const delayedSearch = debounce((value) => {
+    dispatch(onSearchProduct(value));
+  }, 1000);
   const onSearch = (e) => {
     const { value } = e.target;
-    dispatch(onSearchProduct(value));
+    delayedSearch(value);
   };
   return (
     <div className="w-full max-w-full  mt-0 mb-6 lg:flex-none ">
