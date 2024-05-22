@@ -16,14 +16,14 @@ import {
   getAllCategorySuccess,
 } from "../redux/ProductsSlice";
 import { toast } from "react-toastify";
-const Address = process.env.NEXT_PUBLIC_REMOTE_ID
+const address = process.env.NEXT_PUBLIC_REMOTE_ID;
 function* workGetAllCategoryFetch() {
   try {
-    const response = yield call(fetch, `${Address}products/categories`);
+    const response = yield call(fetch, `${address}products/categories`);
     const categoriesData = yield response.json();
 
     if (!response.ok) {
-      throw new Error(categoriesData.message || 'Failed to fetch categories');
+      throw new Error(categoriesData.message || "Failed to fetch categories");
     }
 
     yield put(getAllCategorySuccess(categoriesData));
@@ -33,12 +33,12 @@ function* workGetAllCategoryFetch() {
 }
 
 function* allCategorySaga() {
-  yield takeEvery('products/getAllCategoryFetch', workGetAllCategoryFetch);
+  yield takeEvery("products/getAllCategoryFetch", workGetAllCategoryFetch);
 }
 function* workGetAllProductFetch() {
   try {
     const Products = yield call(() =>
-      fetch(`${Address}products`, {
+      fetch(`${address}products`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       })
@@ -65,7 +65,7 @@ function* workGetProductFetch({ payload }) {
     console.log(payload);
     const { limit, skip } = payload;
     const Products = yield call(() =>
-      fetch(`${Address}products?limit=${limit}&skip=${skip}`, {
+      fetch(`${address}products?limit=${limit}&skip=${skip}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       })
@@ -90,7 +90,7 @@ function* ProductsSaga() {
 function* workDeleteProductFetch({ payload }) {
   try {
     const Products = yield call(() =>
-      fetch(`${Address}products/${payload}`, {
+      fetch(`${address}products/${payload}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       })
@@ -120,7 +120,7 @@ function* workUpdateProductFetch({ payload }) {
 
   try {
     const Products = yield call(() =>
-      fetch(`${Address}products/${itemId}`, {
+      fetch(`${address}products/${itemId}`, {
         method: "put",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -153,7 +153,7 @@ function* UpdateProductsSaga() {
 function* workSearchProductFetch({ payload }) {
   try {
     const products = yield call(() =>
-      fetch(`${Address}products/search?q=${payload}`, {
+      fetch(`${address}products/search?q=${payload}`, {
         method: "get",
         headers: { "Content-Type": "application/json" },
       })
@@ -178,7 +178,7 @@ function* workAddProductFetch({ payload }) {
   const { title, description, price, category } = payload;
   try {
     const products = yield call(() =>
-      fetch(`${Address}products/add`, {
+      fetch(`${address}products/add`, {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -3,20 +3,29 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
+import { type } from "os";
 
 export default function Navbutton() {
   const [userData, setUserData] = useState({});
-  const router = useRouter()
+  const router = useRouter();
+  const { data: session } = useSession();
+
   useEffect(() => {
     let data = localStorage?.getItem("loginData");
     if (data) {
       setUserData(JSON.parse(data));
     }
   }, []);
-const handleLogOut =()=>{
-  localStorage.clear()
-  router.push("/")
-}
+
+  const handleLogOut = () => {
+    signOut();
+    localStorage.clear();
+    if (typeof window !== "undefined") {
+      window.location.href = "/";
+    }
+  };
+
   return (
     <details className="group relative">
       <summary className="flex items-center justify-between  gap-2  font-medium marker:content-none hover:cursor-pointer">
@@ -25,12 +34,16 @@ const handleLogOut =()=>{
             height={100}
             width={100}
             className="w-12 h-12 rounded-full"
-            src={userData?.token?.image}
+            src={
+              !userData?.token ? session?.user?.image : userData?.token?.image
+            }
             alt=""
           />
 
           <span className="">
-            {userData?.token?.firstName + " " + userData?.token?.lastName}
+            {!userData?.token
+              ? session?.user?.name
+              : userData?.token?.firstName + " " + userData?.token?.lastName}
           </span>
         </span>
         <svg
@@ -50,7 +63,10 @@ const handleLogOut =()=>{
 
       <article className="mt-3 pe-5 pb-4 absolute bg-backgroundcol border-mygray border w-56 hover:cursor-pointer">
         <ul className="flex flex-col gap-4 pl-2 mt-4">
-          <li className="flex gap-2 hover:font-semibold " onClick={()=>handleLogOut()}>
+          <li
+            className="flex gap-2 hover:font-semibold "
+            onClick={() => handleLogOut()}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -66,9 +82,8 @@ const handleLogOut =()=>{
               ></path>
             </svg>
 
-            <span className="w-full">lOGOUT</span>
+            <span className="w-full">LogOut</span>
           </li>
-         
         </ul>
       </article>
     </details>

@@ -5,11 +5,11 @@ import {
   getUserTokenAuth,
   getUserTokenAuthFailure,
 } from "../redux/loginSlice";
-const Address = process.env.NEXT_PUBLIC_REMOTE_ID
+const address = process.env.NEXT_PUBLIC_REMOTE_ID;
 function* workGetLoginFetch({ payload }) {
   try {
     const login = yield call(() =>
-      fetch(`${Address}auth/login`, {
+      fetch(`${address}auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -43,7 +43,7 @@ function* workGetTokenAuth({ payload }) {
   console.log(payload);
   try {
     const Auth = yield call(() =>
-      fetch(`${Address}auth/me`, {
+      fetch(`${address}auth/me`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${payload}`,
@@ -54,7 +54,7 @@ function* workGetTokenAuth({ payload }) {
     if (!Auth.ok) {
       const errorResponse = yield Auth.json();
       const errorMessage = errorResponse.msg;
-    
+
       yield put(getUserTokenAuthFailure(errorMessage));
       throw new Error(errorMessage);
     }

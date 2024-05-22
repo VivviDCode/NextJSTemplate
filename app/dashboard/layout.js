@@ -1,26 +1,31 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import Navbar from "../components/Navbar";
 import { useDispatch } from "react-redux";
 import { getUserTokenAuth } from "../saga-redux/redux/loginSlice";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Layout({ children }) {
   const [hideSideBar, setHideSideBar] = useState(true);
   const [windowWidth, setWindowWidth] = useState(null);
   const dispatch = useDispatch();
   const router = useRouter();
+  const { data: session } = useSession();
+  console.log(session);
   useEffect(() => {
+    if (typeof window === "undefined") return;
     const token = localStorage.getItem("token");
-    if (!token && typeof window !== 'undefined') {
-      router.push("/login");
+    if (!token && !session) {
+      // console.log("ksdjbfkbd");
+      // router.push("/login");
     }
     dispatch(getUserTokenAuth());
-  }, [dispatch, router]);
+  }, [dispatch, router, session]);
   useEffect(() => {
     // Check if window is defined (browser environment)
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const handleResize = () => {
         setWindowWidth(window.innerWidth);
       };
