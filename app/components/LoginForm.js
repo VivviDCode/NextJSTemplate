@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { EmailIcon, ShowPassword } from "../../public/assets/Icons";
 import Image from "next/image";
 import img from "../../public/assets/images/kisspng-computer-icons-login-management-user-5ae155f3386149.6695613615247170432309.jpg";
+import gitimg from "../../public/assets/images/download.png";
+import googleimg from "../../public/assets/images/images.jpg";
 import loader from "../../public/assets/images/loader.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginFetch } from "@/app/saga-redux/redux/loginSlice";
@@ -190,8 +192,8 @@ export default function LoginForm() {
                 Register
               </span>
             </h5>
-            <p className="text-mygray text-sm font-medium mb-6">
-              or continue with
+            <p className="text-red-500 text-lg font-medium mb-6">
+              or continue with <b>Next Auth click to continue</b>
             </p>
             <div className="flex space-x-5">
               <p
@@ -199,11 +201,11 @@ export default function LoginForm() {
                 onClick={(e) => onSignIn(e, "github")}
               >
                 <Image
-                  src={img}
+                  src={gitimg}
                   alt="err"
                   height={100}
                   width={100}
-                  className="h-auto w-auto"
+                  className="w-16 h-16"
                 />
               </p>
               <p
@@ -211,29 +213,11 @@ export default function LoginForm() {
                 onClick={(e) => onSignIn(e, "google")}
               >
                 <Image
-                  src={img}
+                  src={googleimg}
                   alt="err"
                   height={100}
                   width={100}
-                  className="h-auto w-auto"
-                />
-              </p>
-              <p className="p-3 rounded-full bg-mylightbg">
-                <Image
-                  src={img}
-                  alt="err"
-                  height={100}
-                  width={100}
-                  className="h-auto w-auto"
-                />
-              </p>
-              <p className="p-3 rounded-full bg-mylightbg">
-                <Image
-                  src={img}
-                  alt="err"
-                  height={100}
-                  width={100}
-                  className="h-auto w-auto"
+                  className="w-16 h-16"
                 />
               </p>
             </div>

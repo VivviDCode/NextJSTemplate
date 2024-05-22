@@ -1,14 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
-import { type } from "os";
 
 export default function Navbutton() {
   const [userData, setUserData] = useState({});
-  const router = useRouter();
   const { data: session } = useSession();
 
   useEffect(() => {
