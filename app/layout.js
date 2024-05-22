@@ -14,6 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   console.log(
+    "ENVS",
     process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
     process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
     process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET
