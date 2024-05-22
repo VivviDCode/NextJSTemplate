@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { EmailIcon, ShowPassword } from "../../public/assets/Icons";
 import Image from "next/image";
-import img from "../../public/assets/images/kisspng-computer-icons-login-management-user-5ae155f3386149.6695613615247170432309.jpg";
 import gitimg from "../../public/assets/images/download.png";
 import googleimg from "../../public/assets/images/images.jpg";
 import loader from "../../public/assets/images/loader.png";
